@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pms_module/ui/screens/home_screen.dart';
+import 'package:pms_module/ui/screens/sign_in_screen.dart';
+import 'package:pms_module/ui/screens/sign_up_screen.dart';
+import 'package:pms_module/ui/screens/splash_screen.dart';
 import 'package:pms_module/ui/utils/app_color.dart';
 
 class PharmacyApp extends StatelessWidget {
@@ -45,6 +48,17 @@ class PharmacyApp extends StatelessWidget {
           ),
         ),
       ),
+      onGenerateRoute: (RouteSettings settings) {
+        late Widget widget;
+        if (settings.name == SplashScreen.name) {
+          widget = const SplashScreen();
+        } else if (settings.name == SignInScreen.name) {
+          widget = const SignInScreen();
+        } else if (settings.name == SignUpScreen.name) {
+          widget = const SignUpScreen();
+        }
+        return MaterialPageRoute(builder: (ctx) => widget);
+      },
     );
   }
 }
