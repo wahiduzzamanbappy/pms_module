@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pms_module/ui/screens/sign_in_screen.dart';
+import 'package:pms_module/ui/screens/sign_up_screen.dart';
 
 class DrawerModule extends StatelessWidget {
   const DrawerModule({
@@ -34,14 +36,18 @@ class DrawerModule extends StatelessWidget {
                   'Medicine Delivery',
                   style: TextStyle(fontSize: 18),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, SignInScreen.name);
+                },
               ),
               ListTile(
                 title: const Text(
                   'Medicine Delivery List',
                   style: TextStyle(fontSize: 18),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, SignUpScreen.name);
+                },
               ),
             ],
           ),
