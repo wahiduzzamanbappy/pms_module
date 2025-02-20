@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/opening_stock_screen.dart';
+import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/stock_reconciliation_screen.dart';
 import 'package:pms_module/ui/screens/sign_in_screen.dart';
 import 'package:pms_module/ui/screens/sign_up_screen.dart';
 
@@ -63,7 +65,9 @@ class DrawerModule extends StatelessWidget {
                   'Opening Stock',
                   style: TextStyle(fontSize: 18),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, OpeningStockScreen.name);
+                },
               ),
               ListTile(
                 title: const Text(
@@ -77,7 +81,9 @@ class DrawerModule extends StatelessWidget {
                   'Stock Reconciliation',
                   style: TextStyle(fontSize: 18),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, StockReconsiliationScreen.name);
+                },
               ),
               ListTile(
                 title: const Text(
@@ -125,15 +131,22 @@ class DrawerModule extends StatelessWidget {
               ),
               ListTile(
                 title: const Text(
+                  'Opening Stock Report',
+                  style: TextStyle(fontSize: 18),
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: const Text(
                   'Stock Reconciliation Report',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontSize: 18),
                 ),
                 onTap: () {},
               ),
               ListTile(
                 title: const Text(
                   'Expired Medicine Report',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontSize: 18),
                 ),
                 onTap: () {},
               ),

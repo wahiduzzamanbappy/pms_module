@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 50,
             width: 100,
             color: Colors.grey,
-              child: Center(child: Text('Expired Item'),)
+              child: Center(child: Text('Expirable Item'),)
           ),
         ),Card(
           child: Container(

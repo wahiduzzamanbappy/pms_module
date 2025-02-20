@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pms_module/ui/controller/auth_controller.dart';
+import 'package:pms_module/ui/screens/sign_in_screen.dart';
 import 'package:pms_module/ui/widgets/snack_bar.dart';
 import '../utils/app_color.dart';
 
@@ -44,11 +45,13 @@ class PMSAppBar extends StatelessWidget implements PreferredSizeWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AuthController.userModel?.fullName ?? '',
+                    //AuthController.userModel?.fullName ?? '',
+                    'ABC Pharmacy',
                     style: textTheme.titleSmall?.copyWith(color: Colors.white),
                   ),
                   Text(
-                    AuthController.userModel?.email ?? '',
+                    //AuthController.userModel?.email ?? '',
+                    'abc@gmail.com',
                     style: textTheme.bodySmall?.copyWith(color: Colors.white),
                   ),
                 ],
@@ -69,7 +72,7 @@ class PMSAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  void _logOutFromTaskListScreen(BuildContext context) {
+  void _logOutFromTaskListScreen(BuildContext context)  {
     showDialog(
       context: context,
       builder: (context) {
@@ -80,9 +83,9 @@ class PMSAppBar extends StatelessWidget implements PreferredSizeWidget {
             TextButton(
               onPressed: () async {
                 await AuthController.clearUserData();
-
                 showSnackBarMessage(context, 'Logged Out successfully');
-
+                Navigator.pushNamedAndRemoveUntil(
+                    context, SignInScreen.name, (_) => false);
                 //Get.offAllNamed(SignInScreen.name);
               },
               child: Text(

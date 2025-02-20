@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pms_module/ui/screens/sign_in_screen.dart';
 import '../utils/app_color.dart';
 import '../widgets/centered_circle_ind.dart';
 
@@ -171,7 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, SignInScreen.name);
               },
           )
         ],
