@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../widgets/drawer_module_widget.dart';
-import '../widgets/pms_app_bar.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -15,9 +14,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    //final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: PMSAppBar(textTheme: textTheme,
+      appBar:AppBar(
+        title: Text('Dashboard'),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
       ),
       drawer: DrawerModule(),
       body: GridView(

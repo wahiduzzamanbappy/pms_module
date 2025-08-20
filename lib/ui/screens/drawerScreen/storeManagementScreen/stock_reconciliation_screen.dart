@@ -155,7 +155,7 @@ class _StockReconsiliationScreenState extends State<StockReconsiliationScreen> {
                   ],
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(onPressed: () {}, child: Text('Save'))
+                ElevatedButton(onPressed: () {}, child: Text('Save'),),
               ],
             ),
           ),

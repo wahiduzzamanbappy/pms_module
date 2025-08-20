@@ -20,6 +20,9 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
   final TextEditingController _uoMTEController = TextEditingController();
   final TextEditingController _batchNoTEController = TextEditingController();
   final TextEditingController _openingQtyTEController = TextEditingController();
+  final GlobalKey _formKey = GlobalKey();
+
+  get currentState => null;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,7 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Row(
@@ -80,6 +84,12 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
                               hintText: 'Item Name',
                               border: OutlineInputBorder(),
                               labelText: 'Item Name'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Item Name';
+                            }
+                            return null; // Input is valid
+                          },
                         ),
                       ),
                     ),
@@ -93,6 +103,12 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
                               hintText: 'Item Code',
                               border: OutlineInputBorder(),
                               labelText: 'Item Code'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Item Code';
+                            }
+                            return null; // Input is valid
+                          },
                         ),
                       ),
                     ),
@@ -106,6 +122,12 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
                               hintText: 'Generic',
                               border: OutlineInputBorder(),
                               labelText: 'Generic'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Generic';
+                            }
+                            return null; // Input is valid
+                          },
                         ),
                       ),
                     ),
@@ -120,9 +142,15 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
                         child: TextFormField(
                           controller: _categoryTEController,
                           decoration: const InputDecoration(
-                              hintText: 'Category',
+                              hintText: 'Item Type',
                               border: OutlineInputBorder(),
-                              labelText: 'Category'),
+                              labelText: 'Item Type'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Item Type';
+                            }
+                            return null; // Input is valid
+                          },
                         ),
                       ),
                     ),
@@ -149,6 +177,12 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
                               hintText: 'Batch No',
                               border: OutlineInputBorder(),
                               labelText: 'Batch No'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Batch No';
+                            }
+                            return null; // Input is valid
+                          },
                         ),
                       ),
                     ),
@@ -185,13 +219,39 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
                               hintText: 'Opening Qty',
                               border: OutlineInputBorder(),
                               labelText: 'Opening Qty'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Quantity';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(onPressed: () {}, child: Text('Save'))
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(onPressed: () {}, child: Text('Save')),
+                      SizedBox(width: 10),
+                      OutlinedButton(
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateColor.resolveWith(
+                            (states) => Colors.deepOrange,
+                          )),
+                          onPressed: () {},
+                          child: Text(
+                            'Reset',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ],
+                  ),
+                ),
+
               ],
             ),
           ),
@@ -200,3 +260,4 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
     );
   }
 }
+

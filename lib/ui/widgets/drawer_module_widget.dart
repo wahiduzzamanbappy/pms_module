@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/opening_stock_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/stock_reconciliation_screen.dart';
-import 'package:pms_module/ui/screens/sign_in_screen.dart';
-import 'package:pms_module/ui/screens/sign_up_screen.dart';
+import '../screens/drawerScreen/dispense/screens/medicine_delivery_list_screen.dart';
+import '../screens/drawerScreen/dispense/screens/medicine_delivery_screen.dart';
 
 class DrawerModule extends StatelessWidget {
   const DrawerModule({
@@ -27,6 +27,7 @@ class DrawerModule extends StatelessWidget {
             ),
           ),
           ExpansionTile(
+            iconColor: Colors.red,
             leading: const Icon(Icons.medical_information),
             title: const Text(
               'Dispense',
@@ -34,33 +35,37 @@ class DrawerModule extends StatelessWidget {
             ),
             children: <Widget>[
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Medicine Delivery',
                   style: TextStyle(fontSize: 18),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, SignInScreen.name);
+                  Navigator.pushNamed(context, MedicineDeliveryScreen.name);
                 },
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Medicine Delivery List',
                   style: TextStyle(fontSize: 18),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, SignUpScreen.name);
+                  Navigator.pushNamed(context, MedicineDeliveryListScreen.name);
                 },
               ),
             ],
           ),
           ExpansionTile(
             leading: const Icon(Icons.store, size: 30),
+            iconColor: Colors.red,
             title: const Text(
               'Store Management',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
             children: <Widget>[
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Opening Stock',
                   style: TextStyle(fontSize: 18),
@@ -70,6 +75,7 @@ class DrawerModule extends StatelessWidget {
                 },
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Opening Stock Approve',
                   style: TextStyle(fontSize: 18),
@@ -77,6 +83,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Stock Reconciliation',
                   style: TextStyle(fontSize: 18),
@@ -86,6 +93,7 @@ class DrawerModule extends StatelessWidget {
                 },
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Stock Reconciliation Approval',
                   style: TextStyle(fontSize: 18),
@@ -93,6 +101,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Demand Generate',
                   style: TextStyle(fontSize: 18),
@@ -100,6 +109,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Demand Approval',
                   style: TextStyle(fontSize: 18),
@@ -107,6 +117,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Stock List',
                   style: TextStyle(fontSize: 18),
@@ -117,12 +128,14 @@ class DrawerModule extends StatelessWidget {
           ),
           ExpansionTile(
             leading: const Icon(Icons.file_copy, size: 30),
+            iconColor: Colors.red,
             title: const Text(
               'Reports',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
             children: <Widget>[
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Daily Medicine Delivery Report',
                   style: TextStyle(fontSize: 18),
@@ -130,6 +143,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Opening Stock Report',
                   style: TextStyle(fontSize: 18),
@@ -137,6 +151,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Stock Reconciliation Report',
                   style: TextStyle(fontSize: 18),
@@ -144,6 +159,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Expired Medicine Report',
                   style: TextStyle(fontSize: 18),
@@ -154,12 +170,14 @@ class DrawerModule extends StatelessWidget {
           ),
           ExpansionTile(
             leading: const Icon(Icons.settings, size: 30),
+            iconColor: Colors.red,
             title: const Text(
               'Pharmacy Setup',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
             children: <Widget>[
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Inventory Item',
                   style: TextStyle(fontSize: 18),
@@ -167,6 +185,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Generic Setup',
                   style: TextStyle(fontSize: 18),
@@ -174,6 +193,7 @@ class DrawerModule extends StatelessWidget {
                 onTap: () {},
               ),
               ListTile(
+                focusColor: Colors.blueGrey,
                 title: const Text(
                   'Fiscal Year',
                   style: TextStyle(fontSize: 18),
