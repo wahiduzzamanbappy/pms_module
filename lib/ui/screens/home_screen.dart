@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../widgets/drawer_module_widget.dart';
-import '../widgets/pms_app_bar.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -15,9 +14,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    //final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: PMSAppBar(textTheme: textTheme,
+      appBar:AppBar(
+        title: Text('Dashboard'),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
       ),
       drawer: DrawerModule(),
       body: GridView(
@@ -43,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 50,
             width: 100,
             color: Colors.grey,
-              child: Center(child: Text('Expired Item'),)
+              child: Center(child: Text('Expirable Item'),)
           ),
         ),Card(
           child: Container(
