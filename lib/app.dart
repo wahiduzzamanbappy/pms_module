@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/manual_dispense_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/medicine_delivery_list_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/medicine_delivery_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/opening_stock_screen.dart';
@@ -62,6 +63,8 @@ class PharmacyApp extends StatelessWidget {
           widget = const SignUpScreen();
         } else if (settings.name == MedicineDeliveryScreen.name) {
           widget = const MedicineDeliveryScreen();
+        } else if (settings.name == ManualDispenseScreen.name) {
+          widget = const ManualDispenseScreen();
         } else if (settings.name == MedicineDeliveryListScreen.name) {
           widget = const MedicineDeliveryListScreen();
         } else if (settings.name == OpeningStockScreen.name) {

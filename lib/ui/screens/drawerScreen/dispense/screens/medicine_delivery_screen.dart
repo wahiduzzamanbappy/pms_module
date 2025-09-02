@@ -311,7 +311,7 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                         setState(() => selectedPrescription = value),
                     items: ['RX1001', 'RX1002']
                         .map((id) =>
-                        DropdownMenuItem(value: id, child: Text(id)))
+                            DropdownMenuItem(value: id, child: Text(id)))
                         .toList(),
                   ),
                   DropdownButtonFormField<String>(
@@ -324,7 +324,7 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                         setState(() => selectedPatient = value),
                     items: ['PT001', 'PT002']
                         .map((id) =>
-                        DropdownMenuItem(value: id, child: Text(id)))
+                            DropdownMenuItem(value: id, child: Text(id)))
                         .toList(),
                   ),
                   DropdownButtonFormField<String>(
@@ -333,13 +333,12 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                       labelText: 'Select Store',
                       border: OutlineInputBorder(),
                     ),
-                    onChanged: (value) =>
-                        setState(() => selectedStore = value),
+                    onChanged: (value) => setState(() => selectedStore = value),
                     validator: (value) =>
-                    value == null ? 'Please select a store' : null,
+                        value == null ? 'Please select a store' : null,
                     items: ['Main', 'Branch A']
                         .map((store) =>
-                        DropdownMenuItem(value: store, child: Text(store)))
+                            DropdownMenuItem(value: store, child: Text(store)))
                         .toList(),
                   ),
                   DropdownButtonFormField<String>(
@@ -356,17 +355,15 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                       });
                     },
                     validator: (value) =>
-                    value == null ? 'Please select a payment method' : null,
+                        value == null ? 'Please select a payment method' : null,
                     items: ['Cash', 'Card', 'Mobile Banking']
-                        .map((method) =>
-                        DropdownMenuItem(value: method, child: Text(method)))
+                        .map((method) => DropdownMenuItem(
+                            value: method, child: Text(method)))
                         .toList(),
                   ),
                 ],
               ),
-
               const SizedBox(height: 16),
-
               if (selectedPayment == 'Mobile Banking') ...[
                 DropdownButtonFormField<String>(
                   value: selectedMobileBank,
@@ -381,8 +378,8 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                       ? 'Please select a mobile banking service'
                       : null,
                   items: ['Bkash', 'Nagad', 'Rocket']
-                      .map((service) =>
-                      DropdownMenuItem(value: service, child: Text(service)))
+                      .map((service) => DropdownMenuItem(
+                          value: service, child: Text(service)))
                       .toList(),
                 ),
                 const SizedBox(height: 16),
@@ -402,9 +399,7 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                   },
                 ),
               ],
-
               const SizedBox(height: 20),
-
               Card(
                 elevation: 2,
                 child: Padding(
@@ -425,11 +420,18 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
-              const Text('Prescription List',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Container(
+                width: screenWidth,
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text(
+                  'Prescription Data',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: DataTable(
@@ -446,54 +448,72 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                       DataCell(Text('RX1001')),
                       DataCell(Text('2025-07-24')),
                       DataCell(Text('Medicine')),
-                      DataCell(TextButton(onPressed: () {}, child: Text('View'))),
+                      DataCell(
+                          TextButton(onPressed: () {}, child: Text('View'))),
                     ]),
                   ],
                 ),
               ),
-
               const SizedBox(height: 20),
-
-              const Text('Medicine Items',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Container(
+                width: screenWidth,
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text(
+                  'Medicine Data',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  columns: const [
-                    DataColumn(label: Text('SL')),
-                    DataColumn(label: Text('Item Type')),
-                    DataColumn(label: Text('Item Name')),
-                    DataColumn(label: Text('Generic')),
-                    DataColumn(label: Text('Pres. Qty')),
-                    DataColumn(label: Text('Stock Qty')),
-                    DataColumn(label: Text('Del. Qty')),
-                    DataColumn(label: Text('Rem. Qty')),
-                    DataColumn(label: Text('Replace Medicine')),
-                    DataColumn(label: Text('Action')),
-                  ],
-                  rows: [
-                    DataRow(cells: [
-                      DataCell(Text('1')),
-                      DataCell(Text('Tablet')),
-                      DataCell(Text('Napa 500mg')),
-                      DataCell(Text('Paracetamol')),
-                      DataCell(Text('10')),
-                      DataCell(Text('50')),
-                      DataCell(Text('10')),
-                      DataCell(Text('0')),
-                      DataCell(TextButton(
-                          onPressed: () {},
-                          child: Text('Replace',
-                              style: TextStyle(color: Colors.orange)))),
-                      DataCell(IconButton(
-                          onPressed: () {}, icon: Icon(Icons.check_box))),
-                    ]),
-                  ],
+                child: SizedBox(
+                  // width: screenWidth,
+                  child: DataTable(
+                    columns: const [
+                      DataColumn(label: Text('SL')),
+                      DataColumn(label: Text('Item Type')),
+                      DataColumn(label: Text('Item Name')),
+                      DataColumn(label: Text('Generic')),
+                      DataColumn(label: Text('Pres. Qty')),
+                      DataColumn(label: Text('Stock Qty')),
+                      DataColumn(label: Text('Del. Qty')),
+                      DataColumn(label: Text('Rem. Qty')),
+                      DataColumn(label: Text('Replace Medicine')),
+                      DataColumn(label: Text('Action')),
+                    ],
+                    rows: [
+                      DataRow(cells: [
+                        DataCell(Text('1')),
+                        DataCell(Text('Tablet')),
+                        DataCell(Text('Napa 500mg')),
+                        DataCell(Text('Paracetamol')),
+                        DataCell(Text('10')),
+                        DataCell(Text('50')),
+                        DataCell(Text('10')),
+                        DataCell(Text('0')),
+                        DataCell(
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Replace',
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.check_box),
+                          ),
+                        ),
+                      ]),
+                    ],
+                  ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
               Center(
                 child: Wrap(
                   spacing: 16,
@@ -526,7 +546,6 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 40),
             ],
           ),
@@ -540,8 +559,7 @@ class _MedicineDeliveryScreenState extends State<MedicineDeliveryScreen> {
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         children: [
-          Text('$label: ',
-              style: const TextStyle(fontWeight: FontWeight.w600)),
+          Text('$label: ', style: const TextStyle(fontWeight: FontWeight.w600)),
           Expanded(child: Text(value)),
         ],
       ),
