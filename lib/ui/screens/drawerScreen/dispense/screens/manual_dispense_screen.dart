@@ -15,6 +15,9 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
 
   String? selectedPrescription;
   String? selectedPatient;
+  String? selectedGender;
+  String? selectedValue;
+  String? selectedMaritalStatus;
   String? selectedStore;
   String? selectedPayment;
   String? selectedMobileBank;
@@ -48,85 +51,7 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: dropdownColumns,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: isPortrait ? 1: 1,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  TextFormField(
-                    controller: _nameTEController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(hintText: 'Name'),
-                    validator: (String? value) {
-                      if (value?.trim().isEmpty ?? true) {
-                        return 'Enter your Name!';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(width: 10),
-                  TextFormField(
-                    controller: _ageTEController,
-                    keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(hintText: 'Age'),
-                    validator: (String? value) {
-                      if (value?.trim().isEmpty ?? true) {
-                        return 'Enter your Age!';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(width: 10),
-                  TextFormField(
-                    controller: _mobileTEController,
-                    keyboardType: TextInputType.phone,
-                    decoration:
-                        const InputDecoration(hintText: 'Contact Number'),
-                    validator: (String? value) {
-                      if (value?.trim().isEmpty ?? true) {
-                        return 'Enter your Contact Number!';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(width: 10),
-                  TextFormField(
-                    controller: _addressTEController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(hintText: 'Address'),
-                    validator: (String? value) {
-                      if (value?.trim().isEmpty ?? true) {
-                        return 'Enter your Address!';
-                      }
-                      return null;
-                    },
-                  ),
-                  DropdownButtonFormField<String>(
-                    value: selectedPayment,
-                    decoration: const InputDecoration(
-                      labelText: 'Select Payment Method',
-
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedPayment = value;
-                        selectedMobileBank = null;
-                        _referenceTEController.clear();
-                      });
-                    },
-                    validator: (value) =>
-                        value == null ? 'Please select a payment method' : null,
-                    items: ['Cash', 'Card', 'Mobile Banking']
-                        .map((method) => DropdownMenuItem(
-                            value: method, child: Text(method)))
-                        .toList(),
-                  ),
-                ],
-              ),
+              _buildTextArea(dropdownColumns, isPortrait),
               const SizedBox(height: 16),
               if (selectedPayment == 'Mobile Banking') ...[
                 DropdownButtonFormField<String>(
@@ -164,26 +89,7 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
                 ),
               ],
               const SizedBox(height: 20),
-              Card(
-                elevation: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Patient Information',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      const Divider(),
-                      _buildInfoRow('Patient ID', 'PT001'),
-                      _buildInfoRow('Name', 'John Doe'),
-                      _buildInfoRow('Age', '45'),
-                      _buildInfoRow('Gender', 'Male'),
-                      _buildInfoRow('Blood Group', 'A+'),
-                      _buildInfoRow('Patient Type', 'Outdoor'),
-                    ],
-                  ),
-                ),
-              ),
+              _patientsCard(),
               const SizedBox(height: 20),
               Container(
                 width: screenWidth,
@@ -287,7 +193,7 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text('Form submitted successfully')),
+                                content: Text('Save successfully')),
                           );
                         }
                       },
@@ -318,7 +224,167 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  _patientsCard() {
+    return Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Patient Information',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    const Divider(),
+                    _buildInfoRow('Patient ID', 'PT001'),
+                    _buildInfoRow('Name', 'John Doe'),
+                    _buildInfoRow('Age', '45'),
+                    _buildInfoRow('Gender', 'Male'),
+                    _buildInfoRow('Blood Group', 'A+'),
+                    _buildInfoRow('Patient Type', 'Outdoor'),
+                  ],
+                ),
+              ),
+            );
+  }
+
+  _buildTextArea(int dropdownColumns, bool isPortrait) {
+    return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: dropdownColumns,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: isPortrait ? 1: 1,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  TextFormField(
+                    controller: _nameTEController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(hintText: 'Name'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter your Name!';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(width: 3),
+                  TextFormField(
+                    controller: _ageTEController,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(hintText: 'Age'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter your Age!';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(width: 3),
+                  TextFormField(
+                    controller: _mobileTEController,
+                    keyboardType: TextInputType.phone,
+                    decoration:
+                        const InputDecoration(hintText: 'Contact Number'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter your Contact Number!';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(width: 3),
+                  DropdownButtonFormField<String>(
+                    value: selectedPayment,
+                    decoration: const InputDecoration(
+                      labelText: 'Select Gender',
+
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender = value;
+                        selectedValue = null;
+                        _referenceTEController.clear();
+                      });
+                    },
+                    validator: (value) =>
+                    value == null ? 'Please select your gender' : null,
+                    items: ['Male', 'Female']
+                        .map((method) => DropdownMenuItem(
+                        value: method, child: Text(method)))
+                        .toList(),
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: selectedPayment,
+                    decoration: const InputDecoration(
+                      labelText: 'Marital Status',
+
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedMaritalStatus = value;
+                        selectedValue = null;
+                        _referenceTEController.clear();
+                      });
+                    },
+                    validator: (value) =>
+                    value == null ? 'Please select Marital Status' : null,
+                    items: ['Divorced', 'Married', 'Unmarried', 'Widowed']
+                        .map((method) => DropdownMenuItem(
+                        value: method, child: Text(method)))
+                        .toList(),
+                  ),
+                  TextFormField(
+                    controller: _addressTEController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(hintText: 'Address'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter your Address!';
+                      }
+                      return null;
+                    },
+                  ),TextFormField(
+                    controller: _addressTEController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(hintText: 'Address'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter your Address!';
+                      }
+                      return null;
+                    },
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: selectedPayment,
+                    decoration: const InputDecoration(
+                      labelText: 'Select Payment Method',
+
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedPayment = value;
+                        selectedMobileBank = null;
+                        _referenceTEController.clear();
+                      });
+                    },
+                    validator: (value) =>
+                        value == null ? 'Please select a payment method' : null,
+                    items: ['Cash', 'Card', 'Mobile Banking']
+                        .map((method) => DropdownMenuItem(
+                            value: method, child: Text(method)))
+                        .toList(),
+                  ),
+                ],
+              ),
+            );
+  }
+
+  _buildInfoRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
