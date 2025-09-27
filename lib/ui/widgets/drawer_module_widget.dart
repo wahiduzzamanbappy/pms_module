@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/manual_dispense_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/opening_stock_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/stock_reconciliation_screen.dart';
+import 'package:pms_module/ui/update_profle_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_list_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_screen.dart';
 
@@ -20,7 +21,14 @@ class DrawerModule extends StatelessWidget {
               child: UserAccountsDrawerHeader(
                 decoration: const BoxDecoration(color: Colors.blueAccent),
                 currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.grey, child: Icon(Icons.person)),
+                  backgroundColor: Colors.grey,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, UpdateProfileScreen.name);
+                    },
+                    icon: Icon(Icons.person_outline),
+                  ),
+                ),
                 currentAccountPictureSize: Size.fromRadius(20),
                 accountName: const Text('John Doe'),
                 accountEmail: const Text('johndoe@gmail.com'),
