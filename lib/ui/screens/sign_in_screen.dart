@@ -1,8 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pms_module/ui/controller/sign_in_controller.dart';
+import 'package:pms_module/ui/screens/dashboard_screen.dart';
 import 'package:pms_module/ui/screens/sign_up_screen.dart';
 import '../utils/app_color.dart';
 import '../widgets/centered_circle_ind.dart';
+import '../widgets/snack_bar.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -16,6 +20,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
+  final SignInController _signInController = Get.put(SignInController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final getProgressIndicator = false;
   bool _obscureText = true;
@@ -112,21 +117,21 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void _onTapSignInButton() {
     if (_formKey.currentState!.validate()) {
-      //_signIn();
+      _signIn();
     }
   }
 
-  /*Future<void> _signIn() async {
+  Future<void> _signIn() async {
     final bool isSuccess = await _signInController.signIn(
       _emailTEController.text.trim(),
       _passwordTEController.text,
     );
     if (isSuccess) {
-      Get.toNamed(MainBottomNavScreen.name);
+      Get.toNamed(DashboardScreen.name);
     } else {
       showSnackBarMessage(context, _signInController.errorMessage!);
     }
-  }*/
+  }
 
   Widget _buildSignUpSection() {
     return RichText(

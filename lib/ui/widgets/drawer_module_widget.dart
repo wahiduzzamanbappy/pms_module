@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/manual_dispense_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/opening_stock_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/stock_reconciliation_screen.dart';
-import 'package:pms_module/ui/update_profle_screen.dart';
+import 'package:pms_module/ui/screens/update_profile_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_list_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_screen.dart';
 

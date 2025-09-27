@@ -9,8 +9,9 @@ import 'package:pms_module/ui/screens/dashboard_screen.dart';
 import 'package:pms_module/ui/screens/sign_in_screen.dart';
 import 'package:pms_module/ui/screens/sign_up_screen.dart';
 import 'package:pms_module/ui/screens/splash_screen.dart';
-import 'package:pms_module/ui/update_profle_screen.dart';
+import 'package:pms_module/ui/screens/update_profile_screen.dart';
 import 'package:pms_module/ui/utils/app_color.dart';
+import 'controller_binder.dart';
 
 class PharmacyApp extends StatelessWidget {
   const PharmacyApp({super.key});
@@ -20,8 +21,9 @@ class PharmacyApp extends StatelessWidget {
     return
       GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: DashboardScreen(),
       initialRoute: '/',
+      initialBinding: ControllerBinder(),
       theme: ThemeData(
         colorSchemeSeed: AppColors.themeColor,
         textTheme: TextTheme(
@@ -56,29 +58,31 @@ class PharmacyApp extends StatelessWidget {
           ),
         ),
       ),
-      onGenerateRoute: (RouteSettings settings) {
-        late Widget widget;
-        if (settings.name == SplashScreen.name) {
-          widget = const SplashScreen();
-        } else if (settings.name == SignInScreen.name) {
-          widget = const SignInScreen();
-        } else if (settings.name == SignUpScreen.name) {
-          widget = const SignUpScreen();
-        } else if (settings.name == MedicineDeliveryScreen.name) {
-          widget = const MedicineDeliveryScreen();
-        } else if (settings.name == ManualDispenseScreen.name) {
-          widget = const ManualDispenseScreen();
-        } else if (settings.name == MedicineDeliveryListScreen.name) {
-          widget = const MedicineDeliveryListScreen();
-        } else if (settings.name == OpeningStockScreen.name) {
-          widget = const OpeningStockScreen();
-        } else if (settings.name == StockReconsiliationScreen.name) {
-          widget = const StockReconsiliationScreen();
-        } else if (settings.name == UpdateProfileScreen.name) {
-          widget = const UpdateProfileScreen();
-        }
-        return MaterialPageRoute(builder: (ctx) => widget);
-      },
+      onGenerateRoute: _appRoutes,
     );
   }
+
+  Route <dynamic>? _appRoutes(RouteSettings settings) {
+      late Widget widget;
+      if (settings.name == SplashScreen.name) {
+        widget = const SplashScreen();
+      } else if (settings.name == SignInScreen.name) {
+        widget = const SignInScreen();
+      } else if (settings.name == SignUpScreen.name) {
+        widget = const SignUpScreen();
+      } else if (settings.name == MedicineDeliveryScreen.name) {
+        widget = const MedicineDeliveryScreen();
+      } else if (settings.name == ManualDispenseScreen.name) {
+        widget = const ManualDispenseScreen();
+      } else if (settings.name == MedicineDeliveryListScreen.name) {
+        widget = const MedicineDeliveryListScreen();
+      } else if (settings.name == OpeningStockScreen.name) {
+        widget = const OpeningStockScreen();
+      } else if (settings.name == StockReconsiliationScreen.name) {
+        widget = const StockReconsiliationScreen();
+      } else if (settings.name == UpdateProfileScreen.name) {
+        widget = const UpdateProfileScreen();
+      }
+      return MaterialPageRoute(builder: (ctx) => widget);
+    }
 }
