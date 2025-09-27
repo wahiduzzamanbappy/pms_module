@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pms_module/ui/widgets/centered_circle_ind.dart';
 import 'package:pms_module/ui/widgets/snack_bar.dart';
-import 'controller/auth_controller.dart';
-import 'controller/update_profile_controller.dart';
+import '../controller/auth_controller.dart';
+import '../controller/update_profile_controller.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({
@@ -26,17 +26,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final UpdateProfileController _updateProfileController =
   Get.put(UpdateProfileController());
-  final AuthController authController = Get.find<AuthController>();
+  final AuthController _authController = Get.find<AuthController>();
   XFile? _pickedImage;
 
   @override
-  void initState() {
+/*  void initState() {
     super.initState();
-    _emailTEController.text = AuthController.userModel?.email ?? '';
-    _firstNameTEController.text = AuthController.userModel?.firstName ?? '';
-    _lastNameTEController.text = AuthController.userModel?.lastName ?? '';
-    _mobileTEController.text = AuthController.userModel?.mobile ?? '';
-  }
+    _emailTEController.text = _authController.userModel?.email ?? '';
+    _firstNameTEController.text = _authController.userModel?.firstName ?? '';
+    _lastNameTEController.text = _authController.userModel?.lastName ?? '';
+    _mobileTEController.text = _authController.userModel?.mobile ?? '';
+  }*/
 
   @override
   Widget build(BuildContext context) {

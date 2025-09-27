@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import '../widgets/drawer_module_widget.dart';
 
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
-  static const String name = '/';
+  static const String name = '/dashboard-screen';
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     //final textTheme = Theme.of(context).textTheme;

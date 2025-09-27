@@ -41,3 +41,4 @@ class AuthController {
     await sharedPreferences.clear();
   }
 }
+
