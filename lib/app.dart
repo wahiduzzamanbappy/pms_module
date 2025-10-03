@@ -18,13 +18,13 @@ class PharmacyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: DashboardScreen(),
       initialRoute: '/',
       initialBinding: ControllerBinder(),
       theme: ThemeData(
+        brightness: Brightness.light,
         colorSchemeSeed: AppColors.themeColor,
         textTheme: TextTheme(
           titleLarge: TextStyle(
@@ -62,27 +62,27 @@ class PharmacyApp extends StatelessWidget {
     );
   }
 
-  Route <dynamic>? _appRoutes(RouteSettings settings) {
-      late Widget widget;
-      if (settings.name == SplashScreen.name) {
-        widget = const SplashScreen();
-      } else if (settings.name == SignInScreen.name) {
-        widget = const SignInScreen();
-      } else if (settings.name == SignUpScreen.name) {
-        widget = const SignUpScreen();
-      } else if (settings.name == MedicineDeliveryScreen.name) {
-        widget = const MedicineDeliveryScreen();
-      } else if (settings.name == ManualDispenseScreen.name) {
-        widget = const ManualDispenseScreen();
-      } else if (settings.name == MedicineDeliveryListScreen.name) {
-        widget = const MedicineDeliveryListScreen();
-      } else if (settings.name == OpeningStockScreen.name) {
-        widget = const OpeningStockScreen();
-      } else if (settings.name == StockReconsiliationScreen.name) {
-        widget = const StockReconsiliationScreen();
-      } else if (settings.name == UpdateProfileScreen.name) {
-        widget = const UpdateProfileScreen();
-      }
-      return MaterialPageRoute(builder: (ctx) => widget);
+  Route<dynamic>? _appRoutes(RouteSettings settings) {
+    late Widget widget;
+    if (settings.name == SplashScreen.name) {
+      widget = const SplashScreen();
+    } else if (settings.name == SignInScreen.name) {
+      widget = const SignInScreen();
+    } else if (settings.name == SignUpScreen.name) {
+      widget = const SignUpScreen();
+    } else if (settings.name == MedicineDeliveryScreen.name) {
+      widget = const MedicineDeliveryScreen();
+    } else if (settings.name == ManualDispenseScreen.name) {
+      widget = const ManualDispenseScreen();
+    } else if (settings.name == MedicineDeliveryListScreen.name) {
+      widget = const MedicineDeliveryListScreen();
+    } else if (settings.name == OpeningStockScreen.name) {
+      widget = const OpeningStockScreen();
+    } else if (settings.name == StockReconsiliationScreen.name) {
+      widget = const StockReconsiliationScreen();
+    } else if (settings.name == UpdateProfileScreen.name) {
+      widget = const UpdateProfileScreen();
     }
+    return MaterialPageRoute(builder: (ctx) => widget);
+  }
 }
