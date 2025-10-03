@@ -204,57 +204,6 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-/*class InfoCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final Color color;
-  final IconData icon;
-
-  const InfoCard(
-      {super.key,
-        required this.title,
-        required this.value,
-        required this.color,
-        required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 1,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              backgroundColor: color.withOpacity(0.15),
-              child: Icon(icon, color: color),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(title,
-                      style: const TextStyle(
-                          fontSize: 12, color: Colors.grey, height: 1.2)),
-                  Text(value,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: color)),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}*/
 class InfoCard extends StatelessWidget {
   final String title;
   final String value;
@@ -329,8 +278,6 @@ class InfoCard extends StatelessWidget {
     );
   }
 }
-
-
 class StatCard extends StatelessWidget {
   final String title;
   final String value;

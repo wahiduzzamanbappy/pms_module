@@ -1,5 +1,5 @@
-import 'package:date_format_field/date_format_field.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pms_module/ui/widgets/pms_app_bar.dart';
 
 class OpeningStockScreen extends StatefulWidget {
@@ -12,17 +12,190 @@ class OpeningStockScreen extends StatefulWidget {
 }
 
 class _OpeningStockScreenState extends State<OpeningStockScreen> {
-  final TextEditingController _challanNoTEController = TextEditingController();
-  final TextEditingController _itemNameTEController = TextEditingController();
-  final TextEditingController _itemCodeTEController = TextEditingController();
-  final TextEditingController _genericTEController = TextEditingController();
-  final TextEditingController _categoryTEController = TextEditingController();
-  final TextEditingController _uoMTEController = TextEditingController();
-  final TextEditingController _batchNoTEController = TextEditingController();
-  final TextEditingController _openingQtyTEController = TextEditingController();
-  final GlobalKey _formKey = GlobalKey();
+  final TextEditingController _challanNoController = TextEditingController();
+  DateTime? _challanDate;
 
-  get currentState => null;
+  final List<Map<String, String>> _medicineList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _challanDate = DateTime.now(); // Auto-set to today
+  }
+
+/*   // ===== Pick Challan Date =====
+  Future<void> _pickChallanDate() async {
+    DateTime now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _challanDate ?? now,
+      firstDate: now, // <-- today or future
+      lastDate: DateTime(2100), // optional future limit
+    );
+    if (picked != null) {
+      setState(() {
+        _challanDate = picked;
+      });
+    }
+  }
+
+// ===== Pick Expiry Date (past or today allowed) =====
+  Future<void> _pickExpiryDate(TextEditingController controller) async {
+    DateTime now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: controller.text.isNotEmpty
+          ? DateTime.parse(controller.text)
+          : DateTime.now(),
+      firstDate: now, // <-- today or future
+      lastDate: DateTime(2100), // past or today only
+    );
+    if (picked != null) {
+      controller.text = picked.toIso8601String().split('T')[0];
+    }
+  }*/
+
+  // ===== Add/Edit Medicine Dialog =====
+  void _showMedicineDialog({Map<String, String>? medicine, int? index}) {
+    final TextEditingController name =
+        TextEditingController(text: medicine?['name']);
+    final TextEditingController code =
+        TextEditingController(text: medicine?['code']);
+    final TextEditingController type =
+        TextEditingController(text: medicine?['type']);
+    final TextEditingController generic =
+        TextEditingController(text: medicine?['generic']);
+    final TextEditingController batch =
+        TextEditingController(text: medicine?['batch']);
+    final TextEditingController expiry =
+        TextEditingController(text: medicine?['expiry']);
+    final TextEditingController qty =
+        TextEditingController(text: medicine?['qty']);
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(medicine == null ? "Add Medicine" : "Edit Medicine"),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                  controller: name,
+                  decoration: const InputDecoration(labelText: "Name")),
+              TextField(
+                  controller: code,
+                  decoration: const InputDecoration(labelText: "Code")),
+              TextField(
+                  controller: type,
+                  decoration: const InputDecoration(labelText: "Type")),
+              TextField(
+                  controller: generic,
+                  decoration: const InputDecoration(labelText: "Generic")),
+              TextField(
+                  controller: batch,
+                  decoration: const InputDecoration(labelText: "Batch")),
+              TextField(
+                controller: expiry,
+                decoration: const InputDecoration(labelText: "Expiry Date"),
+                readOnly: true,
+                onTap: () async {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  DateTime? picked = await showDatePicker(
+                    context: context,
+                    initialDate: medicine != null &&
+                            medicine['expiry']!.isNotEmpty
+                        ? DateFormat('dd-MM-yyyy').parse(medicine['expiry']!)
+                        : DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2100),
+                  );
+                  if (picked != null) {
+                    expiry.text = DateFormat('dd-MM-yyyy').format(picked);
+                  }
+                },
+              ),
+              TextField(
+                controller: qty,
+                decoration: const InputDecoration(labelText: "Quantity"),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(fontWeight: FontWeight.w600),
+              )),
+          ElevatedButton(
+            onPressed: () {
+              if (name.text.isEmpty || code.text.isEmpty || qty.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("Name, Code, and Quantity are required")),
+                );
+                return;
+              }
+
+              final newMedicine = {
+                'name': name.text,
+                'code': code.text,
+                'type': type.text,
+                'generic': generic.text,
+                'batch': batch.text,
+                'expiry': expiry.text,
+                'qty': qty.text,
+              };
+
+              setState(() {
+                if (index == null) {
+                  _medicineList.add(newMedicine);
+                } else {
+                  _medicineList[index] = newMedicine;
+                }
+              });
+              Navigator.pop(context);
+            },
+            child: Text(medicine == null ? "Add" : "Update"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ===== Delete Medicine =====
+  void _deleteMedicine(int index) {
+    setState(() {
+      _medicineList.removeAt(index);
+    });
+  }
+
+  // ===== Save Opening Stock =====
+  void _saveOpeningStock() {
+    if (_challanNoController.text.isEmpty || _challanDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Challan No and Date are required")),
+      );
+      return;
+    }
+    if (_medicineList.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please add at least one medicine")),
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Opening stock saved successfully!")),
+    );
+
+    _challanNoController.clear();
+    _challanDate = null;
+    _medicineList.clear();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,233 +204,156 @@ class _OpeningStockScreenState extends State<OpeningStockScreen> {
     return Scaffold(
       appBar: PMSAppBar(textTheme: textTheme),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _challanNoTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'Challan No',
-                              border: OutlineInputBorder(),
-                              labelText: 'Challan No'),
-                        ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _challanNoController,
+                      decoration: const InputDecoration(
+                        labelText: "Challan No",
+                        border: OutlineInputBorder(),
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: DateFormatField(
-                          type: DateFormatType.type4,
-                          decoration: const InputDecoration(
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            border: OutlineInputBorder(),
-                            labelText: "Date",
-                          ),
-                          onComplete: (date) {},
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _itemNameTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'Item Name',
-                              border: OutlineInputBorder(),
-                              labelText: 'Item Name'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Item Name';
-                            }
-                            return null; // Input is valid
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _itemCodeTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'Item Code',
-                              border: OutlineInputBorder(),
-                              labelText: 'Item Code'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Item Code';
-                            }
-                            return null; // Input is valid
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _genericTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'Generic',
-                              border: OutlineInputBorder(),
-                              labelText: 'Generic'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Generic';
-                            }
-                            return null; // Input is valid
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _categoryTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'Item Type',
-                              border: OutlineInputBorder(),
-                              labelText: 'Item Type'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Item Type';
-                            }
-                            return null; // Input is valid
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _uoMTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'UoM',
-                              border: OutlineInputBorder(),
-                              labelText: 'UoM'),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _batchNoTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'Batch No',
-                              border: OutlineInputBorder(),
-                              labelText: 'Batch No'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Batch No';
-                            }
-                            return null; // Input is valid
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: DateFormatField(
-                          type: DateFormatType.type4,
-                          decoration: const InputDecoration(
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            border: OutlineInputBorder(),
-                            labelText: "Expired Date",
-                          ),
-                          onComplete: (date) {},
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _openingQtyTEController,
-                          decoration: const InputDecoration(
-                              hintText: 'Opening Qty',
-                              border: OutlineInputBorder(),
-                              labelText: 'Opening Qty'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Quantity';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      OutlinedButton(onPressed: () {}, child: Text('Save')),
-                      SizedBox(width: 10),
-                      OutlinedButton(
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStateColor.resolveWith(
-                            (states) => Colors.deepOrange,
-                          )),
-                          onPressed: () {},
-                          child: Text(
-                            'Reset',
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ],
                   ),
-                ),
-
-              ],
-            ),
+                  const SizedBox(width: 10),
+                  /*  Expanded(
+                    child: InkWell(
+                      onTap: () async {
+                        DateTime now = DateTime.now();
+                        final picked = await showDatePicker(
+                          context: context,
+                          initialDate: _challanDate ?? now,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now(),
+                        );
+                        if (picked != null) {
+                          setState(() {
+                            _challanDate = picked;
+                          });
+                        }
+                      },
+                      child: InputDecorator(
+                        decoration: const InputDecoration(
+                          labelText: "Challan Date",
+                          border: OutlineInputBorder(),
+                        ),
+                        child: Text(_challanDate != null
+                            ? DateFormat('dd-MM-yyyy').format(_challanDate!)
+                            : "Select Date"),
+                      ),
+                    ),
+                  ),*/
+                  Expanded(
+                    child: InputDecorator(
+                      decoration: const InputDecoration(
+                        labelText: "Challan Date",
+                        border: OutlineInputBorder(),
+                      ),
+                      child: Text(
+                        "${_challanDate!.day.toString().padLeft(2, '0')}-"
+                        "${_challanDate!.month.toString().padLeft(2, '0')}-"
+                        "${_challanDate!.year}",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () => _showMedicineDialog(),
+                icon: const Icon(Icons.add, color: Colors.white),
+                label: const Text("Opening"),
+              ),
+              const SizedBox(height: 20),
+              _medicineList.isEmpty
+                  ? const Text("No medicine added yet")
+                  : SizedBox(
+                      height: 300,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            headingRowColor:
+                                MaterialStateProperty.all(Colors.blue),
+                            headingTextStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                            border:
+                                TableBorder.all(color: Colors.blue.shade200),
+                            columns: const [
+                              DataColumn(label: Text("SL")),
+                              DataColumn(label: Text("Name")),
+                              DataColumn(label: Text("Code")),
+                              DataColumn(label: Text("Type")),
+                              DataColumn(label: Text("Generic")),
+                              DataColumn(label: Text("Batch")),
+                              DataColumn(label: Text("Expiry")),
+                              DataColumn(label: Text("Qty")),
+                              DataColumn(label: Text("Action")),
+                            ],
+                            rows: List.generate(_medicineList.length, (index) {
+                              final medicine = _medicineList[index];
+                              return DataRow(
+                                onSelectChanged: (_) => _showMedicineDialog(
+                                    medicine: medicine, index: index),
+                                cells: [
+                                  DataCell(Text("${index + 1}")),
+                                  DataCell(Text(medicine['name']!)),
+                                  DataCell(Text(medicine['code']!)),
+                                  DataCell(Text(medicine['type']!)),
+                                  DataCell(Text(medicine['generic']!)),
+                                  DataCell(Text(medicine['batch']!)),
+                                  DataCell(Text(medicine['expiry']!)),
+                                  DataCell(Text(medicine['qty']!)),
+                                  DataCell(IconButton(
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red),
+                                    onPressed: () => _deleteMedicine(index),
+                                  )),
+                                ],
+                              );
+                            }),
+                          ),
+                        ),
+                      ),
+                    ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: _saveOpeningStock,
+                    icon: const Icon(Icons.save, color: Colors.white),
+                    label: const Text("Save"),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white),
+                  ),
+                  const SizedBox(width: 10),
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      _challanNoController.clear();
+                      _challanDate = null;
+                      _medicineList.clear();
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.refresh, color: Colors.white),
+                    label: const Text("Reset"),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
-
