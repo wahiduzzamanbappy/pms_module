@@ -5,6 +5,7 @@ import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/stock_r
 import 'package:pms_module/ui/screens/update_profile_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_list_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_screen.dart';
+import '../screens/drawerScreen/storeManagementScreen/opening_stock_approval_screen.dart';
 
 class DrawerModule extends StatelessWidget {
   const DrawerModule({
@@ -99,7 +100,7 @@ class DrawerModule extends StatelessWidget {
                   'Opening Stock Approve',
                   style: TextStyle(fontSize: 14),
                 ),
-                onTap: () {},
+                onTap: () {Navigator.pushNamed(context, OpeningStockApprovalScreen.name);},
               ),
               ListTile(
                 focusColor: Colors.blueGrey,
