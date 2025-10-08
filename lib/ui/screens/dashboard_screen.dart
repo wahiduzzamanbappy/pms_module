@@ -66,7 +66,7 @@ import '../widgets/drawer_module_widget.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
-  static const String name = '/dashboard-screen';
+  static const String name = 'dashboard-screen';
 
   @override
   Widget build(BuildContext context) {
