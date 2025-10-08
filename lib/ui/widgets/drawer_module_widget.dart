@@ -5,6 +5,7 @@ import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/stock_r
 import 'package:pms_module/ui/screens/update_profile_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_list_screen.dart';
 import '../screens/drawerScreen/dispense/screens/medicine_delivery_screen.dart';
+import '../screens/drawerScreen/reports/ui/screen/income_statement_screen.dart';
 import '../screens/drawerScreen/storeManagementScreen/opening_stock_approval_screen.dart';
 
 class DrawerModule extends StatelessWidget {
@@ -100,7 +101,9 @@ class DrawerModule extends StatelessWidget {
                   'Opening Stock Approve',
                   style: TextStyle(fontSize: 14),
                 ),
-                onTap: () {Navigator.pushNamed(context, OpeningStockApprovalScreen.name);},
+                onTap: () {
+                  Navigator.pushNamed(context, OpeningStockApprovalScreen.name);
+                },
               ),
               ListTile(
                 focusColor: Colors.blueGrey,
@@ -154,6 +157,16 @@ class DrawerModule extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             children: <Widget>[
+              ListTile(
+                focusColor: Colors.blueGrey,
+                title: const Text(
+                  'Income Statement Report',
+                  style: TextStyle(fontSize: 14),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, IncomeStatementScreen.name);
+                },
+              ),
               ListTile(
                 focusColor: Colors.blueGrey,
                 title: const Text(

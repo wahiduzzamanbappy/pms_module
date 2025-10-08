@@ -27,7 +27,6 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _ageTEController = TextEditingController();
   final TextEditingController _addressTEController = TextEditingController();
-
   final TextEditingController _medicineNameController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _stockController = TextEditingController();
@@ -174,6 +173,7 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
 
   // Payment Method Section
   Widget _buildPaymentMethodSection() {
+    String selectedPaymentMethod = 'Cash';
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -189,7 +189,7 @@ class _ManualDispenseScreenState extends State<ManualDispenseScreen> {
                     color: Colors.blueAccent)),
             const Divider(),
             DropdownButtonFormField<String>(
-              value: selectedPayment,
+              value: selectedPaymentMethod,
               decoration: const InputDecoration(
                 labelText: 'Payment Method',
                 border: OutlineInputBorder(),

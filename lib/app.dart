@@ -3,6 +3,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/manual_dispense_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/medicine_delivery_list_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/dispense/screens/medicine_delivery_screen.dart';
+import 'package:pms_module/ui/screens/drawerScreen/reports/ui/screen/income_statement_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/opening_stock_approval_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/opening_stock_screen.dart';
 import 'package:pms_module/ui/screens/drawerScreen/storeManagementScreen/stock_reconciliation_screen.dart';
@@ -83,6 +84,8 @@ class PharmacyApp extends StatelessWidget {
       widget = const OpeningStockApprovalScreen();
     } else if (settings.name == StockReconsiliationScreen.name) {
       widget = const StockReconsiliationScreen();
+    } else if (settings.name == IncomeStatementScreen.name) {
+      widget = const IncomeStatementScreen();
     } else if (settings.name == UpdateProfileScreen.name) {
       widget = const UpdateProfileScreen();
     }
